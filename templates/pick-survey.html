@@ -1,0 +1,18 @@
+{% extends 'base.html'}
+
+{% block title %}Thanks{% endblock %}
+
+{% block content %}
+
+<h1>Hello! Welcome!</h1>
+<form method="POST">
+    <p>Please pick a survey:</p>
+    <select name="survey_code">
+        {% for code, survey in surveys.items() %}
+        <option value="{{ code }}">{{ survey.title }}</option>
+        {% endfor %}
+    </select>
+    <button>GO</button>
+</form>
+
+{% endblock %}

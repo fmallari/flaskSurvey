@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Thanks!{% endblock %}
+
+{% block content %}
+
+<h1> Thanks for completing this survey {{ survey.title}}</h1> 
+<p>The following is a record of your responses:</p>
+<ul>
+    {% for question in survey.questions %}  
+    <li>
+      <b>{{ question.question }}:</b>
+      {{ responses[loop.index0]["choice"] }}
+      <i>{{ responses[loop.index0]["text] }}</i>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
