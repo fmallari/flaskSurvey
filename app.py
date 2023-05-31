@@ -12,14 +12,14 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECT'] = False
 debug = DebugToolbarExtension(app)
 
 @app.route("/")
-def title_page():
-    """title of the survey, the instructions and button to start survey"""
+def show_pick_survey_form():
+    """Show pick-a-survey form"""
 
-    return render_template("pick_survey.html", surveys=surveys)
+    return render_template("pick-survey.html", surveys=surveys)
 
 @app.route("/", methods=["POST"])
 def pick_survey():
-    # Select survey
+    """Select survey"""
 
     survey_id = request.form['survey_code']
 
@@ -77,14 +77,18 @@ def show_question(qid):
         # Attempting to access question page too soon
         return redirect("/")
 
+    if (len(responses) == len(survey.questions)):
+        #They've answered all questions 
+        return redirect("/complete")
+
     if(len(responses) != qid):
-        # Attemping to access questions our of order 
+        # Attemping to access questions out of order 
         flash(f"Invalid question id: {qid}.")
         return redirect(f"/questions/{len(responses)}")
 
-    questions = survey.questions[qid]
+    question = survey.questions[qid]
 
-    return render_template("questions.html", question_num=qid, question=question)
+    return render_template("question.html", question_num=qid, question=question)
 
 @app.route("/complete")
 def say_thanks():
@@ -94,7 +98,7 @@ def say_thanks():
     survey = surveys[survey_id]
     responses = session[RESPONSES_KEY]
 
-    html = render_template("complete.html", survey=survey, responses=responses)
+    html = render_template("completion.html", survey=survey, responses=responses)
 
     #Set cookie noting this survey is done so they can't redo it
 
