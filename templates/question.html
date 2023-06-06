@@ -9,7 +9,7 @@ Question #{{ question_num}}
 <h1>{{ question.question }}</h1>
 <form action="/answer" method="POST">
     {% for choice in question.choices %}
-    <p><input type="radion" name="answer" values="{{ choice }}"> {{ choice }}</p>
+    <p><input type="radio" name="answer" value="{{ choice }}"> {{ choice }}</p>
     {% endfor %}
     </select>
     {% if question.allow_text %}

@@ -70,7 +70,7 @@ def show_question(qid):
     """Display current question"""
 
     responses = session.get(RESPONSES_KEY)
-    survey_code = session(CURRENT_SURVEY_KEY)
+    survey_code = session[CURRENT_SURVEY_KEY]
     survey = surveys[survey_code]
 
     if (responses is None): 
@@ -103,7 +103,7 @@ def say_thanks():
     #Set cookie noting this survey is done so they can't redo it
 
     response = make_response(html)
-    responses.set_cookie(f"completed_{survey_id}", "yes", max_age=60)
+    response.set_cookie(f"completed_{survey_id}", "yes", max_age=60)
     return response 
 
 
