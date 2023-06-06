@@ -7,7 +7,7 @@ RESPONSES_KEY = 'responses'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
-app.config['DEBUG_TB_INTERCEPT_REDIRECT'] = False 
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False 
 
 debug = DebugToolbarExtension(app)
 
@@ -27,10 +27,10 @@ def pick_survey():
     if request.cookies.get(f"completed_{survey_id}"):
         return render_template("already-done.html")
 
-        survey = surveys[survey_id]
-        session[CURRENT_SURVEY_KEY] = survey_id
+    survey = surveys[survey_id]
+    session[CURRENT_SURVEY_KEY] = survey_id
         
-        return render_template("survey_start.html", survey=survey)
+    return render_template("survey_start.html", survey=survey)
 
 @app.route("/begin", methods=["POST"])
 def start_survey():
